@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "dish": {
+      "title": "Блюдо",
+      "description": "Элемент меню кафе",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "description": { "type": "string" },
+        "available": { "type": "boolean" },
+        "ingredients": { "type": "array" }
+      },
+      "required": ["id", "name", "price", "category"]
+    },
+    "ingredient": {
+      "title": "Ингредиент",
+      "description": "Продукт на складе",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "unit": { "type": "string" },
+        "quantity": { "type": "number" },
+        "minStock": { "type": "number" }
+      },
+      "required": ["id", "name", "unit", "quantity"]
+    },
+    "order": {
+      "title": "Заказ",
+      "description": "Заказ клиента",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tableNumber": { "type": "number" },
+        "items": { "type": "array" },
+        "status": { "type": "string", "enum": ["pending", "cooking", "ready", "completed", "cancelled"] },
+        "timestamp": { "type": "number" },
+        "total": { "type": "number" }
+      },
+      "required": ["id", "tableNumber", "items", "status", "timestamp", "total"]
+    },
+    "staff": {
+      "title": "Сотрудник",
+      "description": "Персонал кафе",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "position": { "type": "string" },
+        "phone": { "type": "string" },
+        "login": { "type": "string" }
+      },
+      "required": ["id", "name", "position", "login"]
+    },
+    "message": {
+      "title": "Сообщение",
+      "description": "Сообщение в чате поддержки",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderRole": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "isBot": { "type": "boolean" }
+      },
+      "required": ["id", "senderId", "senderName", "senderRole", "text", "timestamp"]
+    },
+    "chatSession": {
+      "title": "Сессия чата",
+      "description": "Состояние чата пользователя",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userName": { "type": "string" },
+        "status": { "type": "string", "enum": ["bot", "operator", "tech", "closed"] },
+        "lastActivity": { "type": "number" },
+        "rating": { "type": "number" }
+      },
+      "required": ["id", "userName", "status", "lastActivity"]
+    }
+  },
+  "firestore": {
+    "/dishes/{dishId}": {
+      "schema": "dish",
+      "description": "Коллекция блюд меню"
+    },
+    "/ingredients/{ingredientId}": {
+      "schema": "ingredient",
+      "description": "Коллекция ингредиентов на складе"
+    },
+    "/orders/{orderId}": {
+      "schema": "order",
+      "description": "Коллекция заказов"
+    },
+    "/staff/{staffId}": {
+      "schema": "staff",
+      "description": "Коллекция сотрудников"
+    },
+    "/messages/{messageId}": {
+      "schema": "message",
+      "description": "Коллекция сообщений чата"
+    },
+    "/chatSessions/{sessionId}": {
+      "schema": "chatSession",
+      "description": "Коллекция сессий чата"
+    }
+  }
+}
